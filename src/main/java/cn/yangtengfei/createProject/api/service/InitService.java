@@ -1,8 +1,8 @@
 package cn.yangtengfei.createProject.api.service;
 
 
-import cn.yangtengfei.createProject.api.bean.ClassBean;
-import cn.yangtengfei.createProject.api.bean.Module;
+import cn.yangtengfei.createProject.api.bean.java.ClassBean;
+import cn.yangtengfei.createProject.api.bean.java.Module;
 import cn.yangtengfei.createProject.api.bean.SystemBean;
 import cn.yangtengfei.createProject.api.config.Config;
 import cn.yangtengfei.createProject.api.util.FileUtil;
@@ -25,28 +25,30 @@ public class InitService {
     private DirecotryCreateService direcotryCreateService;
 
     @Autowired
-    private FileCreateService fileCreateService;
-
-    @Autowired
     private Config config;
 
     @Autowired
     private FileUtil fileUtil;
 
+    @Autowired
+    private FileCreateService fileCreateService;
+
 
     public void initSystemConfig(String configJson){
         SystemBean systemBean = JSON.parseObject(configJson,SystemBean.class);
         log.info(JSON.toJSONString(systemBean));
-        String basePackage = "com."+systemBean.getCompany()+"."+systemBean.getName();
-        systemBean.setBasePackage(basePackage);
+        //String basePackage = "com."+systemBean.getCompany()+"."+systemBean.getName();
+        //systemBean.setBasePackage(basePackage);
         try {
             Map<String,String> pathMap = direcotryCreateService.createDirecotry(systemBean);
 
+            fileCreateService.createPom(systemBean,pathMap);
 
-            fileUtil.createFileFromFreemark(config.getPomPath(pathMap.get("rootDirectoryPath")),"fatherPom.ftl",systemBean);
-            createModel(systemBean,pathMap);
-            createController(systemBean,pathMap);
-            createService(systemBean,pathMap);
+
+            //fileUtil.createFileFromFreemark(config.getPomPath(pathMap.get("rootDirectoryPath")),"fatherPom.ftl",systemBean);
+            //createModel(systemBean,pathMap);
+            //createController(systemBean,pathMap);
+            //createService(systemBean,pathMap);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,28 +76,7 @@ public class InitService {
         }
     }
 
-    public void createController(SystemBean systemBean,Map<String,String> pathMap){
-        Map<String,Object> map = new HashMap<>();
-        map.put("basePackage",systemBean.getBasePackage());
-        List<Module> modules  = systemBean.getModules();
-        String path = config.getfreemarkDirecotry();
-        if(modules!=null && modules.size()>0){
-            for(Module module:modules) {
-                String name = module.getName();
-                List<ClassBean> classBeans = module.getClasses();
-                for(ClassBean classBean:classBeans){
-                    if("controller".equals(classBean.getPostffix())){
-                        map.put("name",name);
-                        map.put("methods",classBean.getMethods());
-                        map.put("url",classBean.getUrl());
-                        String fileName = name.substring(0,1).toUpperCase()+name.substring(1,name.length())+"Controller.java";
-                        //FileUtil.createFileByFtl(pathMap.get("controllerDirecotryPath")+File.separator+fileName,path,"controllerClass.ftl",map);
-                        fileUtil.createFileFromFreemark(pathMap.get("controllerDirecotryPath")+File.separator+fileName,"controllerClass.ftl",map);
-                    }
-                }
-            }
-        }
-    }
+
 
     public void createModel(SystemBean systemBean,Map<String,String> pathMap){
         Map<String,Object> map = new HashMap<>();

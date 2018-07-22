@@ -1,4 +1,4 @@
-package cn.yangtengfei.createProject.api.bean;
+package cn.yangtengfei.createProject.api.bean.java;
 
 import lombok.Data;
 

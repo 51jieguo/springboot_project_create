@@ -55,10 +55,13 @@ public class Config {
      * @return
      */
     public String getRootPath(String projectName) {
-        return this.getClass().getResource("/").getPath()+"temp"+File.separator  + projectName;
+        //return this.getClass().getResource("/").getPath()+"temp"+File.separator  + projectName;
+
+        return "D://"+projectName;
     }
 
-    public String getMainPath(String rootPath) {
+
+    /*public String getMainPath(String rootPath) {
         return rootPath + File.separator + "src" + File.separator + "main";
     }
 
@@ -109,7 +112,7 @@ public class Config {
 
     public String getViewDirecotoryPath(String basePakagePath){
         return basePakagePath+File.separator+"view";
-    }
+    }*/
 
 
 }

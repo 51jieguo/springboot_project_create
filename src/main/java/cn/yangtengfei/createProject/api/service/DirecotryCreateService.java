@@ -1,13 +1,13 @@
 package cn.yangtengfei.createProject.api.service;
 
 
-import cn.yangtengfei.createProject.api.bean.ClassBean;
 import cn.yangtengfei.createProject.api.bean.SystemBean;
 import cn.yangtengfei.createProject.api.config.Config;
 import cn.yangtengfei.createProject.api.util.DirectoryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,31 +23,59 @@ public class DirecotryCreateService {
     public Map<String,String> createDirecotry(SystemBean systemBean) throws IOException {
         Map<String,String> pathMap = new HashMap<String,String>();
         String rootDirectoryPath = config.getRootPath(systemBean.getName());
-        String mainDirectoryPath  = config.getMainPath(rootDirectoryPath);
-        String javaDirectoryPath = config.getJavePath(mainDirectoryPath);
-        String resourceDirectoryPath = config.getResourcesPath(mainDirectoryPath);
-        String testDirectoryPath = config.getTestPath(mainDirectoryPath);
-        String basePackageDirecotryPath = config.getBaseBusinessPath(javaDirectoryPath,systemBean.getBasePackage());
-        String controllerDirecotryPath = config.getControllerDirecotoryPath(basePackageDirecotryPath);
-        String serviceDirecotryPath = config.getServiceDirecotoryPath(basePackageDirecotryPath);
-        String respositoryDirecotryPath = config.getRespositoryDirecotoryPath(basePackageDirecotryPath);
-        String configDirecotryPath = config.getConfigDirecotoryPath(basePackageDirecotryPath);
-        String beanDirecotryPath = config.getBeanDirecotoryPath(basePackageDirecotryPath);
-        String viewDirecotryPath = config.getViewDirecotoryPath(basePackageDirecotryPath);
-        createDirectoryAndSetPathIntoMap(pathMap,"rootDirectoryPath",rootDirectoryPath);
-        createDirectoryAndSetPathIntoMap(pathMap,"mainDirectoryPath",mainDirectoryPath);
-        createDirectoryAndSetPathIntoMap(pathMap,"javaDirectoryPath",javaDirectoryPath);
-        createDirectoryAndSetPathIntoMap(pathMap,"resourceDirectoryPath",resourceDirectoryPath);
-        createDirectoryAndSetPathIntoMap(pathMap,"testDirectoryPath",testDirectoryPath);
-        createDirectoryAndSetPathIntoMap(pathMap,"basePackageDirecotryPath",basePackageDirecotryPath);
-        createDirectoryAndSetPathIntoMap(pathMap,"controllerDirecotryPath",controllerDirecotryPath);
-        createDirectoryAndSetPathIntoMap(pathMap,"serviceDirecotryPath",serviceDirecotryPath);
-        createDirectoryAndSetPathIntoMap(pathMap,"respositoryDirecotryPath",respositoryDirecotryPath);
-        createDirectoryAndSetPathIntoMap(pathMap,"configDirecotryPath",configDirecotryPath);
-        createDirectoryAndSetPathIntoMap(pathMap,"beanDirecotryPath",beanDirecotryPath);
-        createDirectoryAndSetPathIntoMap(pathMap,"viewDirecotryPath",viewDirecotryPath);
+        createDirectoryAndSetPathIntoMap(pathMap,"rootPath",rootDirectoryPath);
+
+        //创建API 项目
+        String apiPath = rootDirectoryPath + File.separator+systemBean.getName()+"-api";
+        createDirectoryAndSetPathIntoMap(pathMap,"apiRootPath",apiPath);
+        //String pre,String rootPath,SystemBean systemBean,Map<String,String> pathMap
+        createCildDirectory("api",apiPath,systemBean,pathMap);
+
+        //创建service项目
+        String servicePath = rootDirectoryPath + File.separator+systemBean.getName()+"-service";
+        createDirectoryAndSetPathIntoMap(pathMap,"serviceRootPath",servicePath);
+        createCildDirectory("service",servicePath,systemBean,pathMap);
         return pathMap;
     }
+
+    public void createCildDirectory(String pre,String rootPath,SystemBean systemBean,Map<String,String> pathMap){
+        String mainPath = rootPath + File.separator+"src"+File.separator+"main";
+        String javaPath =mainPath+File.separator+"java";
+        createDirectoryAndSetPathIntoMap(pathMap,pre+"javaPath",javaPath);
+
+        String basePackagePath = javaPath+File.separator+File.separator+systemBean.getBasePackage().replace(".","/");
+        if("api".equals(pre)){
+            String reourcesPath =mainPath+File.separator+"reources";
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"reourcesPath",reourcesPath);
+            String testPath =mainPath+File.separator+"test";
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"testPath",testPath);
+            basePackagePath = basePackagePath +File.separator+pre;
+
+            String controllerPath = basePackagePath + File.separator +"controller";
+            String viewPath = basePackagePath + File.separator +"view";
+            String configPath = basePackagePath + File.separator +"config";
+            String servicePath = basePackagePath + File.separator +"service";
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"controllerPath",controllerPath);
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"viewPath",viewPath);
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"configPath",configPath);
+
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"servicePath",servicePath);
+        }else{
+            String servicePath = basePackagePath + File.separator +"service";
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"servicePath",servicePath);
+            String modelPath = basePackagePath + File.separator +"model";
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"modelPath",modelPath);
+            String repositoryPath = basePackagePath + File.separator +"repository";
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"repositoryPath",repositoryPath);
+            String configPath = basePackagePath + File.separator +"config";
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"configPath",configPath);
+
+        }
+
+
+
+    }
+
 
     public Map<String,String> createDirectoryAndSetPathIntoMap(Map<String,String> map,String key,String path){
         DirectoryUtils.createDirectory(path);

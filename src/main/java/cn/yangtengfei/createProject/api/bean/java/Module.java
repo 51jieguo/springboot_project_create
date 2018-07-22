@@ -1,6 +1,5 @@
-package cn.yangtengfei.createProject.api.bean;
+package cn.yangtengfei.createProject.api.bean.java;
 
-import cn.yangtengfei.createProject.api.util.excel.Attribute;
 import lombok.Data;
 
 import java.util.List;
