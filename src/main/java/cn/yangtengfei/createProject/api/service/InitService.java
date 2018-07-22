@@ -1,8 +1,8 @@
 package cn.yangtengfei.createProject.api.service;
 
 
-import cn.yangtengfei.createProject.api.bean.java.ClassBean;
-import cn.yangtengfei.createProject.api.bean.java.Module;
+import cn.yangtengfei.createProject.api.bean.ClassBean;
+import cn.yangtengfei.createProject.api.bean.Module;
 import cn.yangtengfei.createProject.api.bean.SystemBean;
 import cn.yangtengfei.createProject.api.config.Config;
 import cn.yangtengfei.createProject.api.util.FileUtil;

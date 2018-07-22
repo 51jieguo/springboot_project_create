@@ -2,9 +2,12 @@ package cn.yangtengfei.createProject.api.service;
 
 
 import cn.yangtengfei.createProject.api.bean.SystemBean;
-import cn.yangtengfei.createProject.api.bean.java.ClassBean;
-import cn.yangtengfei.createProject.api.bean.java.Module;
+import cn.yangtengfei.createProject.api.bean.ClassBean;
+import cn.yangtengfei.createProject.api.bean.Module;
+import cn.yangtengfei.createProject.api.bean.jar.Dependencie;
+import cn.yangtengfei.createProject.api.bean.jar.Jar;
 import cn.yangtengfei.createProject.api.util.FileUtil;
+import com.alibaba.fastjson.support.odps.udf.CodecCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +53,15 @@ public class FileCreateService {
         childs.add(systemBean.getName()+"-service");
         map.put("childs",childs);
         map.put("name",systemBean.getName()+"-api");
+
+        List<Jar> jars = new ArrayList<>();
+        List<Dependencie> dependencies = systemBean.getDependencies();
+        for(Dependencie dependencie:dependencies){
+            if("api".equals(dependencie.getName())){
+                jars.addAll(dependencie.getJars());
+            }
+        }
+        map.put("jars",jars);
         fileUtil.createFileFromFreemark(apiRootPath+ File.separator+"pom.xml","pom/childPom.ftl",map);
 
         createController(systemBean,"api",pathMap);

@@ -2,8 +2,17 @@
 {
 	"name":"userSystem",
 	"company":"yangtenfei",
+	"basePackage":"com.jieguo",
 	"domain":"yangtengfei",
 	"version":"0.0.1",
+	"dependencies":[
+		{"name":"api","jars":[
+			{"artifactId":"spring-boot-starter-web","groupId":"org.springframework.boot","version":null}
+		]},
+		{"name":"service","jars":[
+			
+		]}
+	],
 	"modules":[
 		{
 			"name":"user",

@@ -1,7 +1,6 @@
 package cn.yangtengfei.createProject.api.bean;
 
-import cn.yangtengfei.createProject.api.bean.java.BaseBean;
-import cn.yangtengfei.createProject.api.bean.java.Module;
+import cn.yangtengfei.createProject.api.bean.jar.Dependencie;
 import lombok.Data;
 
 import java.util.List;
@@ -22,6 +21,8 @@ public class SystemBean {
     private String basePackage;
 
     private String version;
+
+    private List<Dependencie> dependencies;
 
 
 }
