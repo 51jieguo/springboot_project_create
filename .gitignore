@@ -1,0 +1,11 @@
+.idea/
+.gradle
+target/
+logs/
+bower_components/
+.project
+.classpath
+.settings
+*.log
+*.iml
+*.jar

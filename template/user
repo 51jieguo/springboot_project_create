@@ -1,0 +1,70 @@
+
+{
+	"name":"userSystem",
+	"company":"yangtenfei",
+	"domain":"yangtengfei",
+	"version":"0.0.1",
+	"modules":[
+		{
+			"name":"user",
+			"models": [
+				{"name": "id","type": "String"}, 
+				{"name": "name","type": "String"}, 
+				{"name": "age","type": "int"}, 
+				{"name": "date","type": "Date"}
+			],
+			"classes":[
+				{
+					"postffix":"controller",
+					"url":"/admin",
+					"methods":[{
+						"url":"/insert",
+						"name":"insert",
+						"params":[{"name": "id","type": "String"}, {"name": "name","type": "String"}],
+						"returnType":"String"
+					}]
+				},
+				{
+					"postffix":"service",
+					"methods":[{
+						"name":"insert",
+						"params":[{"name": "id","type": "String"}, {"name": "name","type": "String"}
+						],
+						"returnType":"String"
+					}]
+				}	
+			]
+		},
+		{
+			"name":"book",
+			"models": [
+				{"name": "id","type": "String"}, 
+				{"name": "name","type": "String"}, 
+				{"name": "age","type": "int"}, 
+				{"name": "date","type": "Date"}
+			],
+			"classes":[
+				{
+					"postffix":"controller",
+					"url":"/admin",
+					"methods":[{
+						"url":"/insert",
+						"name":"insert",
+						"params":[{"name": "id","type": "String"}, {"name": "name","type": "String"}],
+						"returnType":"String"
+					}]
+				},
+				{
+					"postffix":"service",
+					"methods":[{
+						"name":"insert",
+						"params":[{"name": "id","type": "String"}, {"name": "name","type": "String"}
+						],
+						"returnType":"String"
+					}]
+				}	
+			]
+		}
+	]
+
+}
