@@ -44,8 +44,8 @@ public class FileCreateService {
         map.put("childs",null);
 
         fileUtil.createFileFromFreemark(serviceRootPath+ File.separator+"pom.xml","pom/childPom.ftl",map);
-        createService(systemBean,"service",pathMap);
-        createModel(systemBean,"service",pathMap);
+        //createService(systemBean,"service",pathMap);
+        //createModel(systemBean,"service",pathMap);
 
         childs = new ArrayList<String>();
         childs.add(systemBean.getName()+"-service");
@@ -61,8 +61,7 @@ public class FileCreateService {
         }
         map.put("jars",jars);
         fileUtil.createFileFromFreemark(apiRootPath+ File.separator+"pom.xml","pom/childPom.ftl",map);
-
-        createController(systemBean,"api",pathMap);
+        //createController(systemBean,"api",pathMap);
     }
 
     public void createModel(SystemBean systemBean,String pre,Map<String,String> pathMap){
@@ -77,8 +76,7 @@ public class FileCreateService {
                 map.put("name",name);
                 map.put("models",module.getModels());
                 String fileName = name.substring(0,1).toUpperCase()+name.substring(1,name.length())+"Model.java";
-                //FileUtil.createFileByFtl(pathMap.get("beanDirecotryPath")+File.separator+fileName,path,"model.ftl",map);
-                fileUtil.createFileFromFreemark(pathMap.get(pre+"modelPath")+File.separator+fileName,"java/model.ftl",map);
+                fileUtil.createFileFromFreemark(pathMap.get(pre+"modelPath")+File.separator+fileName,"db/mongo/model.ftl",map);
             }
         }
     }
@@ -119,12 +117,18 @@ public class FileCreateService {
                         map.put("name",name);
                         map.put("methods",classBean.getMethods());
                         String fileName = name.substring(0,1).toUpperCase()+name.substring(1,name.length())+"Service.java";
-                        //FileUtil.createFileByFtl(pathMap.get("controllerDirecotryPath")+File.separator+fileName,path,"controllerClass.ftl",map);
                         fileUtil.createFileFromFreemark(pathMap.get(pre+"servicePath")+File.separator+fileName,"java/service.ftl",map);
                     }
                 }
             }
         }
+    }
+
+    public void createApplicationProperties(SystemBean systemBean,String pre,Map<String,String> pathMap){
+        Map<String,Object> map = new HashMap<>();
+        String rootPath = pathMap.get(pre+"RootPath");
+        String reourcesPath = pathMap.get(pre+"reourcesPath");
+        fileUtil.createFileFromFreemark(reourcesPath+ File.separator+"application.properties","application.ftl",map);
     }
 
 
