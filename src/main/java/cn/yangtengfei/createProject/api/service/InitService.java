@@ -42,6 +42,8 @@ public class InitService {
         try {
             Map<String,String> pathMap = direcotryCreateService.createDirecotry(systemBean);
 
+            fileCreateService.createController(systemBean,"api",pathMap);
+            fileCreateService.createService(systemBean,"service",pathMap);
             fileCreateService.createPom(systemBean,pathMap);
 
 

@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "${url}/${name}")
-@Slf4j
 public class ${name?cap_first}Controller {
 
         <#list methods as method>

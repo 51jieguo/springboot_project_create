@@ -23,10 +23,6 @@ public class FileCreateService {
     @Autowired
     private FileUtil fileUtil;
 
-    public void createFile(SystemBean systemBean,Map<String,String> pathMap){
-        createPom(systemBean,pathMap);
-    }
-
     public void createPom(SystemBean systemBean,Map<String,String> pathMap){
         String rootPath = pathMap.get("rootPath");
         String apiRootPath = pathMap.get("apiRootPath");
@@ -41,10 +37,12 @@ public class FileCreateService {
         childs.add(systemBean.getName()+"-api");
         childs.add(systemBean.getName()+"-service");
         map.put("childs",childs);
+
         fileUtil.createFileFromFreemark(rootPath+ File.separator+"pom.xml","pom/pom.ftl",map);
         map.put("parentName",systemBean.getName());
         map.put("name",systemBean.getName()+"-service");
         map.put("childs",null);
+
         fileUtil.createFileFromFreemark(serviceRootPath+ File.separator+"pom.xml","pom/childPom.ftl",map);
         createService(systemBean,"service",pathMap);
         createModel(systemBean,"service",pathMap);
