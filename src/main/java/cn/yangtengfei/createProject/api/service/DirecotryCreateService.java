@@ -1,6 +1,7 @@
 package cn.yangtengfei.createProject.api.service;
 
 
+import cn.yangtengfei.createProject.api.bean.Module;
 import cn.yangtengfei.createProject.api.bean.SystemBean;
 import cn.yangtengfei.createProject.api.config.Config;
 import cn.yangtengfei.createProject.api.util.DirectoryUtils;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -44,8 +46,9 @@ public class DirecotryCreateService {
         createDirectoryAndSetPathIntoMap(pathMap,pre+"javaPath",javaPath);
 
         String basePackagePath = javaPath+File.separator+File.separator+systemBean.getBasePackage().replace(".","/");
+        List<Module> moduleList = systemBean.getModules();
         if("api".equals(pre)){
-            String reourcesPath =mainPath+File.separator+"reources";
+            String reourcesPath =mainPath+File.separator+"resources";
             createDirectoryAndSetPathIntoMap(pathMap,pre+"reourcesPath",reourcesPath);
             String testPath =mainPath+File.separator+"test";
             createDirectoryAndSetPathIntoMap(pathMap,pre+"testPath",testPath);
@@ -55,25 +58,59 @@ public class DirecotryCreateService {
             String viewPath = basePackagePath + File.separator +"view";
             String configPath = basePackagePath + File.separator +"config";
             String servicePath = basePackagePath + File.separator +"service";
+
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"basePackagePath",basePackagePath);
             createDirectoryAndSetPathIntoMap(pathMap,pre+"controllerPath",controllerPath);
             createDirectoryAndSetPathIntoMap(pathMap,pre+"viewPath",viewPath);
             createDirectoryAndSetPathIntoMap(pathMap,pre+"configPath",configPath);
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"servicePath",servicePath);
 
-            createDirectoryAndSetPathIntoMap(pathMap,pre+"servicePath",servicePath);
+            //创建view 文件夹
+            for(Module module:moduleList){
+
+
+                String tempPathKey = pre+module.getName()+"viewPath";
+                String tempPathPath = viewPath + File.separator + module.getBusinessPackage();
+                createDirectoryAndSetPathIntoMap(pathMap,tempPathKey,tempPathPath);
+
+                tempPathKey = pre+module.getName()+"servicePath";
+                tempPathPath = servicePath + File.separator + module.getBusinessPackage();
+                createDirectoryAndSetPathIntoMap(pathMap,tempPathKey,tempPathPath);
+
+                tempPathKey = pre+module.getName()+"controllerPath";
+                tempPathPath = controllerPath + File.separator + module.getBusinessPackage();
+                createDirectoryAndSetPathIntoMap(pathMap,tempPathKey,tempPathPath);
+            }
+            String tempPathKey = pre+"common"+"viewPath";
+            String tempPathPath = viewPath + File.separator + "common";
+            createDirectoryAndSetPathIntoMap(pathMap,tempPathKey,tempPathPath);
+
+
         }else{
-            String servicePath = basePackagePath + File.separator +"service";
-            createDirectoryAndSetPathIntoMap(pathMap,pre+"servicePath",servicePath);
+
             String modelPath = basePackagePath + File.separator +"model";
             createDirectoryAndSetPathIntoMap(pathMap,pre+"modelPath",modelPath);
+            String servicePath = basePackagePath + File.separator +"service";
+            createDirectoryAndSetPathIntoMap(pathMap,pre+"servicePath",servicePath);
             String repositoryPath = basePackagePath + File.separator +"repository";
             createDirectoryAndSetPathIntoMap(pathMap,pre+"repositoryPath",repositoryPath);
             String configPath = basePackagePath + File.separator +"config";
             createDirectoryAndSetPathIntoMap(pathMap,pre+"configPath",configPath);
 
+            for(Module module:moduleList){
+                String tempPathKey = pre+module.getName()+"modelPath";
+                String tempPathPath = modelPath + File.separator + module.getBusinessPackage();
+                createDirectoryAndSetPathIntoMap(pathMap,tempPathKey,tempPathPath);
+
+                tempPathKey = pre+module.getName()+"servicePath";
+                tempPathPath = servicePath + File.separator + module.getBusinessPackage();
+                createDirectoryAndSetPathIntoMap(pathMap,tempPathKey,tempPathPath);
+
+                tempPathKey = pre+module.getName()+"repositoryPath";
+                tempPathPath = repositoryPath + File.separator + module.getBusinessPackage();
+                createDirectoryAndSetPathIntoMap(pathMap,tempPathKey,tempPathPath);
+            }
         }
-
-
-
     }
 
 
@@ -82,45 +119,4 @@ public class DirecotryCreateService {
         map.put(key,path);
         return map;
     }
-    /*public void createFile(ClassBean classBean) throws IOException {
-        String rootPath = config.getRootPath(projectName);
-        System.out.println(rootPath);
-
-        boolean isHasChild = false;
-        //创建根目录
-        DirectoryUtils.createDirectory(rootPath);
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("package",basePackage);
-        map.put("projectName",projectName);
-        String parentRootPath = config.getRootPath(projectName);
-
-        String freemarkDirecotry = config.getfreemarkDirecotryh();
-        if(isHasChild){
-            //TODO:有子项目处理
-            map.put("packageType","pom");
-        }else{
-            map.put("packageType","jar");
-            //创建main目录
-            String mainPath  = config.getMainPath(parentRootPath);
-            DirectoryUtils.createDirectory(config.getJavePath(mainPath));
-            String resourcePath =config.getResourcesPath(mainPath);
-            DirectoryUtils.createDirectory(resourcePath);
-            DirectoryUtils.createDirectory(config.getTestPath(mainPath));
-
-            String bussinessPath =config.getBaseBusinessPath(mainPath,basePackage);
-            //创建controller service
-            String controllerPath = bussinessPath + File.separator + "controller";
-            String servicePath = bussinessPath + File.separator + "service";
-            DirectoryUtils.createDirectory(controllerPath,servicePath);
-            //创建properties
-            String propertiesPath=config.propertiesPath(resourcePath);
-            FileUtil.createFileByFtl(propertiesPath,freemarkDirecotry,map);
-
-        }
-        String pomPath = config.pomPath(rootPath);
-        FileUtil.createFileByFtl(pomPath,freemarkDirecotry,map);
-    }*/
-
-
-
 }

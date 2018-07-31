@@ -9,6 +9,10 @@ public class Module {
 
     private String name;
 
+    private String businessPackage;
+
+    private String dbName;
+
     List<Model> models;
 
     List<ClassBean> classes;

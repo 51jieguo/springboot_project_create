@@ -11,6 +11,29 @@
     </parent>
 
     <artifactId>${name}</artifactId>
+    <version>${version}-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <#if jars?? && (jars?size > 0) >
+    <dependencies>
+        <#list jars as child>
+        <dependency>
+            <groupId>${child.groupId}</groupId>
+            <artifactId>${child.artifactId}</artifactId>
+            <#if child.version??>
+            <version>${child.version}</version>
+            </#if>
+        </dependency>
+        </#list>
+    </dependencies>
+    </#if>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+
+    </build>
 </project>

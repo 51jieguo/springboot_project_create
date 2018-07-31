@@ -1,0 +1,53 @@
+
+{
+	"name":"userSystem",
+	"company":"yangtenfei",
+	"basePackage":"com.jieguo",
+	"domain":"yangtengfei",
+	"version":"0.0.1",
+	"dependencies":[
+    		{"name":"api","jars":[
+    			{"artifactId":"spring-boot-starter-web","groupId":"org.springframework.boot","version":null}
+				{"artifactId":"userSystem-service","groupId":"com.jieguo","version":"0.0.1-SNAPSHOT"}
+    		]},
+    		{"name":"service","jars":[
+				{"artifactId":"spring-boot-starter-data-mongodb","groupId":"org.springframework.boot","version":null}
+    		]}
+    	],
+	"modules":[
+		{
+			"name":"user",
+			"businessPackage":"user",
+			"dbName":"user",
+			"models": [
+				{"name": "id","type": "String"}, 
+				{"name": "name","type": "String"}, 
+				{"name": "age","type": "int"}, 
+				{"name": "date","type": "Date"}
+			]
+		},
+		{
+			"name":"userDept",
+			"businessPackage":"user",
+			"dbName":"user",
+			"models": [
+				{"name": "id","type": "String"}, 
+				{"name": "name","type": "String"}, 
+				{"name": "age","type": "int"}, 
+				{"name": "date","type": "Date"}
+			]
+		},
+		{
+			"name":"book",
+			"businessPackage":"book",
+			"dbName":"book",
+			"models": [
+				{"name": "id","type": "String"}, 
+				{"name": "name","type": "String"}, 
+				{"name": "age","type": "int"}, 
+				{"name": "date","type": "Date"}
+			]
+		}
+	]
+
+}

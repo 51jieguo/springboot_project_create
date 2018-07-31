@@ -1,4 +1,4 @@
-package ${basePackage}.model;
+package ${basePackage}.model.${bussinessPackage};
 
 
 import org.springframework.data.mongodb.core.mapping.Document;

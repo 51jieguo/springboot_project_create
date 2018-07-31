@@ -1,20 +1,16 @@
 package cn.yangtengfei.createProject.api.service;
 
 
-import cn.yangtengfei.createProject.api.bean.ClassBean;
-import cn.yangtengfei.createProject.api.bean.Module;
 import cn.yangtengfei.createProject.api.bean.SystemBean;
 import cn.yangtengfei.createProject.api.config.Config;
+import cn.yangtengfei.createProject.api.service.normalDefine.NormalFileCreateService;
 import cn.yangtengfei.createProject.api.util.FileUtil;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -31,7 +27,7 @@ public class InitService {
     private FileUtil fileUtil;
 
     @Autowired
-    private FileCreateService fileCreateService;
+    private NormalFileCreateService normalFileCreateService;
 
 
     public void initSystemConfig(String configJson){
@@ -40,13 +36,12 @@ public class InitService {
         try {
             Map<String,String> pathMap = direcotryCreateService.createDirecotry(systemBean);
 
-            fileCreateService.createController(systemBean,"api",pathMap);
-            fileCreateService.createApplicationProperties(systemBean,"api",pathMap);
-
-            fileCreateService.createService(systemBean,"service",pathMap);
-            fileCreateService.createModel(systemBean,"service",pathMap);
-
-            fileCreateService.createPom(systemBean,pathMap);
+            //fileCreateService.createController(systemBean,"api",pathMap);
+            //fileCreateService.createApplicationProperties(systemBean,"api",pathMap);
+            //fileCreateService.createService(systemBean,"service",pathMap);
+            //fileCreateService.createModel(systemBean,"service",pathMap);
+            normalFileCreateService.createPom(systemBean,pathMap);
+            normalFileCreateService.createClass(systemBean,pathMap);
 
         } catch (IOException e) {
             e.printStackTrace();
