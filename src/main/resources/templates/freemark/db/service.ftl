@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import javax.annotation.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 @Slf4j
 @Service
@@ -37,5 +39,10 @@ public class ${name?cap_first}Service {
 
         public ${name?cap_first}Model findById(String id){
                 return ${name}Respository.findOne(id);
+        }
+
+        public Page<${name?cap_first}Model> findByDeleteFlgOrderByUpdateTimeDesc(Integer deleteFlg, int page, int pageSize){
+                PageRequest pageRequest = new PageRequest(page, pageSize);
+                return ${name}Respository.findByDeleteFlgOrderByUpdateTimeDesc(deleteFlg,pageRequest);
         }
 }

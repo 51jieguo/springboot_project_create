@@ -109,6 +109,11 @@ public class NormalFileCreateService {
         String fileName = name+".java";
         fileUtil.createFileFromFreemark(pathMap.get(pre+"commonviewPath")+File.separator+fileName,"java/RestResult.ftl",map);
 
+        name = "PageResultModel";
+        map.put("name",name);
+        fileName = name+".java";
+        fileUtil.createFileFromFreemark(pathMap.get(pre+"commonviewPath")+File.separator+fileName,"java/PageResultModel.ftl",map);
+
     }
 
     public void createView(SystemBean systemBean,Module module,String pre,Map<String,String> pathMap){

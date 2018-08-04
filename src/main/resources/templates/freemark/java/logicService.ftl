@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
+import ${basePackage}.api.view.common.*;
+import org.springframework.data.domain.Page;
 
 @Slf4j
 @Service
@@ -48,5 +50,13 @@ public class ${name?cap_first}LogicService {
                 BeanUtils.copyProperties(${name}Model,${name}View);
             }
             return ${name}View;
+        }
+
+        public PageResultModel findByDeleteFlgOrderByUpdateTimeDesc(Integer deleteFlg, int page, int pageSize){
+            PageResultModel pageResultModel = new PageResultModel();
+            Page<${name?cap_first}Model> ${name}Page = ${name}Service.findByDeleteFlgOrderByUpdateTimeDesc(deleteFlg,page,pageSize);
+            pageResultModel.setTotal(${name}Page.getTotalElements());
+            pageResultModel.setRows(${name}Page.getContent());
+            return pageResultModel;
         }
 }

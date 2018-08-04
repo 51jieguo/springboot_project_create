@@ -11,4 +11,6 @@ import java.util.List;
 @EnableMongoRepositories(mongoTemplateRef = "${dbName}MongoTemplate")
 public interface ${name?cap_first}Respository  extends MongoRepository<${name?cap_first}Model,String> {
 
+    Page<${name?cap_first}Model> findByDeleteFlgOrderByUpdateTimeDesc(Integer deleteFlg, Pageable pageable);
+
 }

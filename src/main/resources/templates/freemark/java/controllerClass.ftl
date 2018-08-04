@@ -54,11 +54,8 @@ public class ${name?cap_first}Controller {
 
         @RequestMapping(value = "/page", method = RequestMethod.GET)
         public PageResultModel findAll(HttpServletRequest request, Integer pageNumber , Integer pageSize) {
-        int start = pageNumber-1;
-        PageResultModel pageResultModel = new PageResultModel();
-        //pageResultModel.setTotal(articlesPage.getTotalElements());
-        //pageResultModel.setRows(articlesPage.getContent());
-        //pageResultModel.setOtherData(tag);
-        return  pageResultModel;
+                int index = pageNumber-1;
+                PageResultModel pageResultModel = ${name}LogicService.findByDeleteFlgOrderByUpdateTimeDesc(0, index, pageSize);
+                return  pageResultModel;
         }
 }
