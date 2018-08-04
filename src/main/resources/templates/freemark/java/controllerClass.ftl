@@ -51,4 +51,14 @@ public class ${name?cap_first}Controller {
                 ${name?cap_first}View ${name}View = ${name}LogicService.findById(id);
                 return restResult;
         }
+
+        @RequestMapping(value = "/page", method = RequestMethod.GET)
+        public PageResultModel findAll(HttpServletRequest request, Integer pageNumber , Integer pageSize) {
+        int start = pageNumber-1;
+        PageResultModel pageResultModel = new PageResultModel();
+        //pageResultModel.setTotal(articlesPage.getTotalElements());
+        //pageResultModel.setRows(articlesPage.getContent());
+        //pageResultModel.setOtherData(tag);
+        return  pageResultModel;
+        }
 }

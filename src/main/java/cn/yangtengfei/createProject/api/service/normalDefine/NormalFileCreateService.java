@@ -85,6 +85,7 @@ public class NormalFileCreateService {
         }
 
         createDbConfig(systemBean,modules,"service",pathMap);
+        createCommonModel(systemBean,"service",pathMap);
         createCommonClass(systemBean,"api",pathMap);
 
     }
@@ -164,6 +165,13 @@ public class NormalFileCreateService {
         map.put("bussinessPackage",module.getBusinessPackage());
         String fileName = name.substring(0,1).toUpperCase()+name.substring(1,name.length())+"Model.java";
         fileUtil.createFileFromFreemark(pathMap.get(pre+module.getBusinessPackage()+"modelPath")+File.separator+fileName,"db/mongo/model.ftl",map);
+    }
+
+    public void createCommonModel(SystemBean systemBean,String pre,Map<String,String> pathMap){
+        Map<String,Object> map = new HashMap<>();
+        map.put("basePackage",systemBean.getBasePackage());
+        String fileName = "BaseModel.java";
+        fileUtil.createFileFromFreemark(pathMap.get(pre+"baseModel"+"modelPath")+File.separator+fileName,"db/baseModel/basemodel.ftl",map);
     }
 
     public void createRepository(SystemBean systemBean,Module module,String pre,Map<String,String> pathMap){

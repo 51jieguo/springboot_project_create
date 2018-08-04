@@ -1,13 +1,13 @@
 package ${basePackage}.model.${bussinessPackage};
 
-
+import ${basePackage}.model.common.BaseModel;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 import java.util.Date;
 
 
 @Document(collection = "${name}")
-public class ${name?cap_first}Model implements Serializable{
+public class ${name?cap_first}Model extends BaseModel implements Serializable{
 
     <#list models as model>
     private ${model.type} ${model.name};

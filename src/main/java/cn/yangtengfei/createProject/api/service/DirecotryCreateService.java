@@ -101,7 +101,6 @@ public class DirecotryCreateService {
                 String tempPathKey = pre+module.getName()+"modelPath";
                 String tempPathPath = modelPath + File.separator + module.getBusinessPackage();
                 createDirectoryAndSetPathIntoMap(pathMap,tempPathKey,tempPathPath);
-
                 tempPathKey = pre+module.getName()+"servicePath";
                 tempPathPath = servicePath + File.separator + module.getBusinessPackage();
                 createDirectoryAndSetPathIntoMap(pathMap,tempPathKey,tempPathPath);
@@ -110,6 +109,10 @@ public class DirecotryCreateService {
                 tempPathPath = repositoryPath + File.separator + module.getBusinessPackage();
                 createDirectoryAndSetPathIntoMap(pathMap,tempPathKey,tempPathPath);
             }
+
+            String tempPathKey = pre+"baseModel"+"modelPath";
+            String tempPathPath = modelPath + File.separator + "baseModel";
+            createDirectoryAndSetPathIntoMap(pathMap,tempPathKey,tempPathPath);
         }
     }
 
